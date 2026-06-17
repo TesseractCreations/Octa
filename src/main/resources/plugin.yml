@@ -1,0 +1,5 @@
+name: Octa
+version: '1.0'
+main: com.csl.octa.Octa
+api-version: '1.21'
+load: STARTUP
