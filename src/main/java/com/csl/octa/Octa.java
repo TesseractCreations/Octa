@@ -4,10 +4,7 @@ import com.csl.octa.items.drinkable.Beer;
 import com.csl.octa.items.drinkable.Mojito;
 import com.csl.octa.items.drugs.Meth;
 import com.csl.octa.items.edible.Burger;
-import com.csl.octa.items.misc.Barley;
-import com.csl.octa.items.misc.Lemon;
-import com.csl.octa.items.misc.Lime;
-import com.csl.octa.items.misc.Mint;
+import com.csl.octa.items.misc.*;
 import com.csl.octa.items.weapon.GrapplingHook;
 import com.csl.octa.items.weapon.Wither;
 import com.csl.octa.listeners.*;
@@ -56,6 +53,7 @@ public final class Octa extends JavaPlugin {
         new Barley(itemManager).register();
         new GrapplingHook(itemManager).register();
         new Beer(itemManager).register();
+        new Confetti(itemManager).register();
         //new Wither(itemManager).register();
         new Burger(itemManager).register();
 
@@ -68,6 +66,7 @@ public final class Octa extends JavaPlugin {
         new BeerRecipe(this, itemManager);
         new GrapplingHookRecipe(this, itemManager);
         new BurgerRecipe(this, itemManager);
+        new ConfettiRecipe(this, itemManager);
         //new WitherRecipe(this, itemManager);
 
         // Blocks
@@ -82,6 +81,7 @@ public final class Octa extends JavaPlugin {
         pm.registerEvents(new PackListener(), this);
         //pm.registerEvents(new VoidiumListener(this, itemManager), this);
         pm.registerEvents(new MapListener(this, mapManager), this);
+        pm.registerEvents(new ConfettiListener(this, itemManager), this);
 
         for (World world : getServer().getWorlds()) {
             world.getPopulators().add(new LemonTreePopulator(blockManager));
