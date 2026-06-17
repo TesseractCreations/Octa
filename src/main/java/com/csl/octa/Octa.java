@@ -79,6 +79,7 @@ public final class Octa extends JavaPlugin {
         pm.registerEvents(new LemonTreeListener(blockManager, itemManager), this);
         pm.registerEvents(grapplingHookListener, this);
         pm.registerEvents(new BlockListener(blockManager, itemManager, this), this);
+        pm.registerEvents(new PackListener(), this);
         //pm.registerEvents(new VoidiumListener(this, itemManager), this);
         pm.registerEvents(new MapListener(this, mapManager), this);
 
