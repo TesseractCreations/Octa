@@ -15,7 +15,7 @@ import java.security.MessageDigest;
 public class PackListener implements Listener {
 
     private static final String GITHUB_API_URL =
-            "https://api.github.com/repos/TesseractCreations/Tesseract-Resourcepack/releases/latest";
+            "https://github.com/TesseractCreations/Tesseract-Resourcepack/releases/latest/download/resourcepack.zip";
 
     private String cachedPackUrl = null;
     private byte[] cachedHash = null;
