@@ -15,7 +15,7 @@ import java.security.MessageDigest;
 public class PackListener implements Listener {
 
     private static final String GITHUB_API_URL =
-            "https://api.github.com/repos/TesseractCreations/Tesseract-Resourcepack/releases/latest";
+            "https://github.com/TesseractCreations/Tesseract-Resourcepack/releases/latest/download/resourcepack.zip";
 
     private String cachedPackUrl = null;
     private byte[] cachedHash = null;
@@ -28,14 +28,12 @@ public class PackListener implements Listener {
     }
 
     private void fetchAndApply(PlayerJoinEvent event) {
-        // Run async so we don't block the main thread
         event.getPlayer().getServer().getScheduler().runTaskAsynchronously(
-                event.getPlayer().getServer().getPluginManager().getPlugin("Octa"), // change to your plugin name
+                event.getPlayer().getServer().getPluginManager().getPlugin("Octa"),
                 () -> {
                     try {
                         long now = System.currentTimeMillis();
 
-                        // Only re-fetch from GitHub if cache expired
                         if (cachedPackUrl == null || (now - lastFetch) > CACHE_DURATION) {
                             String[] result = fetchLatestPackUrl();
                             if (result == null) {
@@ -51,7 +49,6 @@ public class PackListener implements Listener {
                         final String url = cachedPackUrl;
                         final byte[] hash = cachedHash;
 
-                        // Must send the resource pack on the main thread
                         event.getPlayer().getServer().getScheduler().runTask(
                                 event.getPlayer().getServer().getPluginManager().getPlugin("Octa"),
                                 () -> event.getPlayer().setResourcePack(
@@ -59,7 +56,7 @@ public class PackListener implements Listener {
                                         hash,
                                         net.kyori.adventure.text.Component.text(
                                                 "§6You must accept the resource pack to play on this server."),
-                                        true // forced — kicks if declined
+                                        true
                                 )
                         );
 
@@ -75,9 +72,6 @@ public class PackListener implements Listener {
         );
     }
 
-    /**
-     * Hits the GitHub releases API and finds the first .zip asset download URL.
-     */
     private String[] fetchLatestPackUrl() {
         try {
             HttpURLConnection conn = (HttpURLConnection) URI.create(GITHUB_API_URL).toURL().openConnection();
@@ -120,10 +114,6 @@ public class PackListener implements Listener {
         }
     }
 
-    /**
-     * Downloads the file at the given URL and computes its SHA-1 hash.
-     * Minecraft requires the SHA-1 hash for resource pack verification.
-     */
     private byte[] computeSHA1(String fileUrl) throws Exception {
         HttpURLConnection conn = (HttpURLConnection) URI.create(fileUrl).toURL().openConnection();
         conn.setRequestMethod("GET");
